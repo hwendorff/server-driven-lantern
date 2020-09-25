@@ -1,0 +1,25 @@
+#pragma once
+
+#include <QString>
+#include <QDebug>
+#include <QtWidgets>
+#include <QtNetwork/QTcpSocket>
+#include <QLabel>
+
+
+class Client : public QWidget
+{
+	Q_OBJECT
+private:
+	QTcpSocket* pTcpSocket;
+	QLabel* lantern;
+    void changeLanternColor(QColor newColor);
+public:
+	Client(const QString& strHost, int nPort, QWidget *parent = nullptr);
+	~Client();
+private slots:
+	void slotReadyRead();
+	void slotError(QAbstractSocket::SocketError);
+	void slotChangeServer();
+	void slotConnected();
+};
