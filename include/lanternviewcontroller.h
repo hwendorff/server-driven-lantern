@@ -9,18 +9,21 @@
 #include "lanterncommandprotocol.h"
 
 class NetworkService;
+class ServerDataDialog;
 class LanternViewController : public QWidget
 {
 	Q_OBJECT
 private:
-
-	QDialog* serverDataDialog;
-	LanternWidget* lanternW;
+    LanternWidget* lantern;
     NetworkService*  service;
+    ServerDataDialog* serverDataDialog;
+protected:
+    void showEvent(QShowEvent *event) override;
 public:
 	void handleNetworkCommand(lanternCommand* command);
-	LanternViewController(const QString& strHost, int nPort, QWidget *parent = nullptr);
+    LanternViewController(QWidget *parent = nullptr);
 	~LanternViewController();
 private slots:
 	void slotChangeServer();
+    void slotGetServerData(QPair<QString, int> serverData);
 };
