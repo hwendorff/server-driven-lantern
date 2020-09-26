@@ -9,20 +9,22 @@ class LanternWidget;
 
 using commandHandlersMap = QMap<CommandType, std::function<void()>>;
 
+/* widget with lamp, change lamp state when receiving commands */
 class LanternWidget : public QWidget
 {
 	Q_OBJECT
 private:
 	bool enabled = false;
-	QLabel* lantern;
+    QLabel* lantern;
+
 	void onHandler();
 	void offHandler();
 	void changeColorHandler();
-	commandHandlersMap* handlers;
+    commandHandlersMap *handlers;
 public:
-	void changeLanternColor(QColor newColor);
+    void serverChangedHandler();
 public:
-	lanternCommand* command;
+    lanternCommand *command;
 	explicit LanternWidget(QWidget *parent = nullptr);
 	void processCommand(CommandType);
 	bool isLanternEnabled() {

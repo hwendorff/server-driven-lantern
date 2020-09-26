@@ -2,8 +2,9 @@
 #include "serverdatadialog.h"
 #include "network_service.h"
 
-ServerDataDialog::ServerDataDialog(QWidget* parent): QDialog(parent) {
-    delegate = static_cast<LanternViewController*>(parent);
+ServerDataDialog::ServerDataDialog(QWidget *parent): QDialog(parent) {
+    delegate = static_cast<LanternViewController *>(parent);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 
     hostLabel = new QLabel("Server name:");
 	portLabel = new QLabel("Server port:");

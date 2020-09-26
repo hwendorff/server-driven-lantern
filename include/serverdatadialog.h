@@ -4,6 +4,7 @@
 
 class LanternViewController;
 
+/*  used to enter hostname and port of new server */
 class ServerDataDialog: public QDialog {
 	Q_OBJECT
 private:
@@ -16,7 +17,7 @@ private:
     QPushButton *quitButton;
     QDialogButtonBox *buttonsBox;
 public:
-    ServerDataDialog(QWidget *parent = nullptr);
+    explicit ServerDataDialog(QWidget *parent = nullptr);
 	~ServerDataDialog();
 signals:
     void editingServerDataDone(QPair<QString, int> serverData);

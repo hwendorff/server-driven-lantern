@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pictures/lantern.png</file>
+    </qresource>
+</RCC>

@@ -12,8 +12,8 @@ typedef struct lanternCommand lanternCommand;
 struct lanternCommand {
 	CommandType type;
 	uint16_t length;
-	uint8_t* value;
-	lanternCommand(CommandType type, uint16_t len) {
+    uint8_t *value;
+    explicit lanternCommand(CommandType type, uint16_t len) {
 		this->type = type;
 		this->length = len;
 		if (len) {

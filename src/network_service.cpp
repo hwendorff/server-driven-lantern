@@ -7,7 +7,7 @@
 #include "lanterncommandprotocol.h"
 #include "cstring"
 
-NetworkService::NetworkService(const QString &strHost, int nPort, LanternViewController *delegate):
+NetworkService::NetworkService(QString strHost, int nPort, LanternViewController *delegate):
     delegate(delegate),
     host(strHost),
     port(nPort)
@@ -44,7 +44,7 @@ void NetworkService::slotReadyRead() {
 		uint16_t command_length = static_cast<uint16_t>(buf[1] << 8 | buf[2]);
 		if (data_size == command_length + 3) {
 			/* command is good */
-			lanternCommand* command = new lanternCommand(command_type, command_length);
+            lanternCommand *command = new lanternCommand(command_type, command_length);
 			std::memcpy(command->value, &buf[3], command_length);
 			delegate->handleNetworkCommand(command);
 		} else {
@@ -54,11 +54,6 @@ void NetworkService::slotReadyRead() {
 	} else {
 		qDebug() << "Error: Incorrect command packet";
 	}
-	std::cout << data_size << std::endl;
-	for (size_t i = 0; i < data_size; ++i) {
-		std::cout << static_cast<int>(buf[i]) << ".";
-	}
-	std::cout << std::endl;
 }
 
 void NetworkService::slotError(QAbstractSocket::SocketError err) {

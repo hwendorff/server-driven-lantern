@@ -2,14 +2,18 @@
 #include "QMap"
 #include "QDebug"
 #include "QLayout"
+#include "QGraphicsOpacityEffect"
 
 
 LanternWidget::LanternWidget(QWidget *parent) : QWidget(parent)
 {
-	QPixmap lanternPixmap = QPixmap(100, 100);
-	lanternPixmap.fill(Qt::green);
+    QPixmap lanternPixmap = QPixmap(":/pictures/lantern.png");
 	lantern = new QLabel(this);
 	lantern->setPixmap(lanternPixmap);
+    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(lantern);
+    effect->setOpacity(0.5);
+    lantern->setGraphicsEffect(effect);
+    lantern->setStyleSheet("background-color: rgb(255, 255, 255);");
 
 	QVBoxLayout* vLayout = new QVBoxLayout;
 	vLayout->addWidget(lantern);
@@ -22,11 +26,18 @@ LanternWidget::LanternWidget(QWidget *parent) : QWidget(parent)
 }
 
 void LanternWidget::onHandler() {
-    enabled = true;
+    if (enabled == false) {
+        enabled = true;
+        lantern->graphicsEffect()->setEnabled(false);
+    }
 }
 
 void LanternWidget::offHandler() {
-    enabled = false;
+    if (enabled == true) {
+        enabled = false;
+        lantern->graphicsEffect()->setEnabled(true);
+        lantern->setStyleSheet("background-color: rgb(255, 255, 255);");
+    }
 }
 
 void LanternWidget::changeColorHandler() {
@@ -37,17 +48,14 @@ void LanternWidget::changeColorHandler() {
 			int R = 0 + this->command->value[0];
 			int G = 0 + this->command->value[1];
 			int B = 0 + this->command->value[2];
-			QColor newColor = QColor(R, G, B);
-			changeLanternColor(newColor);
+            QString styleSheetString = QString("background-color: rgb(%0, %1, %2);").arg(R).arg(G).arg(B);
+            lantern->setStyleSheet(styleSheetString);
 		}
 	}
 }
 
-void LanternWidget::changeLanternColor(QColor newColor) {
-	QPixmap current = *lantern->pixmap();
-
-	current.fill(newColor);
-	lantern->setPixmap(current);
+void LanternWidget::serverChangedHandler() {
+    this->offHandler();
 }
 
 void LanternWidget::processCommand(CommandType command) {

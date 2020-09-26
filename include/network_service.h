@@ -3,17 +3,19 @@
 #include <QtNetwork/QTcpSocket>
 #include "lanternviewcontroller.h"
 
+/* wrapper on tcpsocket, parse server commands and
+ * sends to delegate (viewcontroller) */
 class NetworkService: public QObject {
 	Q_OBJECT
 private:
-	LanternViewController* delegate;
-	QTcpSocket* pTcpSocket;
+    LanternViewController *delegate;
+    QTcpSocket *pTcpSocket;
     QString host;
-    QTimer* reconnectTimer;
+    QTimer *reconnectTimer;
     int port;
     bool needToReconnect = false;
 public:
-	NetworkService(const QString& strHost, int nPort, LanternViewController* delegate);
+    explicit NetworkService(QString strHost, int nPort, LanternViewController *delegate);
 	~NetworkService();
 private slots:
 	void slotReadyRead();

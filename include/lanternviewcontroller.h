@@ -10,20 +10,22 @@
 
 class NetworkService;
 class ServerDataDialog;
+
+
 class LanternViewController : public QWidget
 {
 	Q_OBJECT
 private:
-    LanternWidget* lantern;
-    NetworkService*  service;
-    ServerDataDialog* serverDataDialog;
-protected:
-    void showEvent(QShowEvent *event) override;
+    LanternWidget *lantern;
+    NetworkService *service;
+    ServerDataDialog *serverDataDialog;
+    QTimer *timeoutAtStartTimer;
 public:
-	void handleNetworkCommand(lanternCommand* command);
-    LanternViewController(QWidget *parent = nullptr);
+    void handleNetworkCommand(lanternCommand *command);
+    explicit LanternViewController(QWidget *parent = nullptr);
 	~LanternViewController();
 private slots:
 	void slotChangeServer();
     void slotGetServerData(QPair<QString, int> serverData);
+    void slotStartTimeoutExpired();
 };
